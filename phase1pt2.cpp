@@ -1,3 +1,4 @@
+#include "phase1header.h"
 #include <iostream>
 
 double dot_product(const double* A, const double* B, const int length) {
@@ -8,7 +9,7 @@ double dot_product(const double* A, const double* B, const int length) {
     return value;
 }
 
-void multply_mv_col_major(const double* matrix, int rows, int cols, const double* vector, double* result) {
+void multiply_mv_col_major(const double* matrix, int rows, int cols, const double* vector, double* result) {
     for (int i=0; i<rows; i++) {
         double* left_row = (double*)malloc(cols * sizeof(double));
         for (int j=0; j<cols; j++) {
@@ -50,7 +51,7 @@ int main() {
     }
     print_matrix_col_major(matrix, rows, cols);
     print_vector(vector, cols);
-    multply_mv_col_major(matrix, rows, cols, vector, result);
+    multiply_mv_col_major(matrix, rows, cols, vector, result);
     print_vector(result, rows);
     return 0;
 }
