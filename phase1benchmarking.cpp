@@ -4,7 +4,6 @@
 #include <chrono>
 #include <random>
 #include <cmath>
-#include <omp.h>
 #include <numeric>
 
 double mean (const int* vec, const int length) {
