@@ -94,5 +94,33 @@ When the data is aligned, accessing information is straightforward although it i
 in terms of memory storage.
 
 - Discuss the role of compiler optimizations (like inlining) in achieving high performance. How did the optimization level affect the performance of your baseline and optimized implementations? What are the potential drawbacks of aggressive optimization?
+
+Answer:
+
+Compiler optimizations, like inlining, can significantly boost performance by reducing the overhead of function calls. Inlining a function means embedding the function's code directly where the function is called, avoiding the overhead of jumping to another memory location. This is particularly helpful in numerical algorithms that rely on many small functions, such as dot products or matrix multiplications, where the cost of a function call can add up quickly.
+
+In our case, inlining the dot product function resulted in a major performance boost. The baseline implementation, where the dot product was a separate function, introduced unnecessary function call overhead and data copying, which slowed down execution. After inlining the logic and removing the redundant memory allocations, we observed significant improvements across all dimensions.
+
+However, aggressive optimization comes with some trade-offs. While inlining reduces overhead, it can also increase the size of the binary code, especially if the inlined functions are large or called frequently. This could lead to increased memory usage or even cache misses if the code size becomes too large to fit in cache. In some cases, too many inlines may result in code bloat, which negatively affects the performance due to increased instruction cache misses.
+
 - Based on your profiling experience, what were the main performance bottlenecks in your initial implementations? How did your profiling results guide your optimization efforts?
+
+Answer:
+
+From the profiling, the primary performance bottleneck in the initial implementation was the dotproduct() function, which was consuming about 25% of the total runtime. Additionally, there was unnecessary overhead due to copying rows and columns of matrices into contiguous memory before performing dot products, as well as memory deallocation using free().
+
+The profiling results helped guide our optimization efforts in two key areas. First, we focused on inlining the dot product function. By removing the function call and directly embedding the dot product logic inside the main function loops, we eliminated the overhead and unnecessary memory copying. Second, we optimized memory usage by directly accessing the matrix data without copying it into contiguous blocks. This eliminated the need for costly free() operations and reduced memory fragmentation.
+
+After these optimizations, we saw a significant reduction in runtime, especially for larger matrix dimensions.
+  
 - Reflect on the teamwork aspect of this assignment. How did dividing the initial implementation tasks and then collaborating on analysis and optimization work? What were the challenges and benefits of this approach?
+
+  Answer:
+
+Dividing the initial implementation tasks allowed us to efficiently distribute the workload and tackle different components of the matrix operations concurrently. Each team member could focus on writing specific functions or implementing particular matrix algorithms, which made the initial phase much faster. We could leverage individual strengths, such as expertise in certain algorithms or coding techniques.
+
+The collaboration during the analysis and optimization phase proved to be very beneficial. By profiling the code as a team, we were able to identify key bottlenecks and areas for improvement. For example, one team member focused on understanding the impact of memory alignment, while another focused on compiler optimizations. By pooling our insights, we developed a comprehensive optimization strategy.
+
+One challenge was coordinating the changes to ensure that the optimizations did not break the overall code structure. Since we were working on separate sections, some optimizations (like memory handling) had to be carefully integrated to avoid errors. Another challenge was ensuring that all team members understood the profiling results and how to act on them. In the end, these challenges were overcome through communication and shared learning, which enhanced our overall approach.
+
+The main benefit was that this collaborative approach helped us optimize the code in a more targeted manner, significantly improving performance without overhauling the entire implementation. The synergy of the team's diverse skills and knowledge was key to achieving a highly optimized solution.
