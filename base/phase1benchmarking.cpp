@@ -4,7 +4,6 @@
 #include <chrono>
 #include <random>
 #include <cmath>
-#include <omp.h>
 #include <numeric>
 
 double mean (const int* vec, const int length) {
@@ -21,7 +20,7 @@ double stdev (const int* vec, const int length) {
     for (int i=0; i<length; i++) {
         var += std::pow(vec[i] - mu, 2);
     }
-    return std::sqrt(var / (length-1));
+    return std::sqrt(var / (length - 1));
 }
 
 double dot_product(const double* A, const double* B, const int length) {
@@ -104,7 +103,7 @@ void multiply_mm_transposed_b(const double* matrixA, int rowsA, int colsA, const
 
 int main() {
 
-    int trials = 100;
+    int trials = 100000;
 
     int dim = 100;
 
