@@ -1,13 +1,5 @@
-#include "phase1header.h"
 #include <iostream>
-
-double dot_product(const double* A, const double* B, const int length) {
-    double value = 0;
-    for (int i=0; i<length; i++){
-        value += A[i] * B[i];
-    }
-    return value;
-}
+#include "phase1dotprod.h"
 
 void multiply_mm_transposed_b(const double* matrixA, int rowsA, int colsA, const double* matrixB_transposed, int rowsB, int colsB, double* result) {
     if (colsA != rowsB) {
