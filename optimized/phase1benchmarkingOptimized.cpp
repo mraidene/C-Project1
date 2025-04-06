@@ -3,6 +3,11 @@
 #include <random>
 #include <cmath>
 #include <numeric>
+#include "phase1pt1.h"
+#include "phase1pt2.h"
+#include "phase1pt3.h"
+#include "phase1pt4.h"
+
 
 double mean (const int* vec, const int length) {
     double sum = 0.0;
@@ -83,9 +88,9 @@ void multiply_mm_transposed_b(const double* matrixA, int rowsA, int colsA, const
 
 int main() {
 
-    int trials = 500;
+    int trials = 100;
 
-    int dim = 4;
+    int dim = 100;
 
     int rowsA = dim;
     int colsA = dim;
