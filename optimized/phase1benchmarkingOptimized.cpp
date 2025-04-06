@@ -3,11 +3,6 @@
 #include <random>
 #include <cmath>
 #include <numeric>
-#include "phase1pt1.h"
-#include "phase1pt2.h"
-#include "phase1pt3.h"
-#include "phase1pt4.h"
-
 
 double mean (const int* vec, const int length) {
     double sum = 0.0;
@@ -101,15 +96,19 @@ int main() {
     std::uniform_int_distribution<> distrib(-10, 10);
     std::mt19937 gen(rd());
 
-    double* vector = (double*)malloc(colsB * sizeof(double));
-    double* matrixA = (double*)malloc(colsA * rowsA * sizeof(double));
-    double* matrixBRowMajor = (double*)malloc(colsB * rowsB * sizeof(double));
-    double* matrixBColMajor = (double*)malloc(colsB * rowsB * sizeof(double));
+    // double* vector = (double*)malloc(colsB * sizeof(double));
+    double* vector = new double[colsB * sizeof(double)];
+    // double* matrixA = (double*)malloc(colsA * rowsA * sizeof(double));
+    double* matrixA = new double[colsA * rowsA * sizeof(double)];
+    // double* matrixBRowMajor = (double*)malloc(colsB * rowsB * sizeof(double));
+    double* matrixBRowMajor = new double[colsB * rowsB * sizeof(double)];
+    // double* matrixBColMajor = (double*)malloc(colsB * rowsB * sizeof(double));
+    double* matrixBColMajor = new double[colsB * rowsB * sizeof(double)];
 
-    int* times1 = (int*)malloc(trials * sizeof(int));
-    int* times2 = (int*)malloc(trials * sizeof(int));
-    int* times3 = (int*)malloc(trials * sizeof(int));
-    int* times4 = (int*)malloc(trials * sizeof(int));
+    int* times1 = new int[trials * sizeof(int)];
+    int* times2 = new int[trials * sizeof(int)];
+    int* times3 = new int[trials * sizeof(int)];
+    int* times4 = new int[trials * sizeof(int)];
 
     for (int t=0; t<trials; t++){
         // Filling The Vector
@@ -131,34 +130,34 @@ int main() {
             }
         }
 
-        double* result1 = (double*)malloc(rowsB * sizeof(double));
-        double* result2 = (double*)malloc(rowsB * sizeof(double));
-        double* result3 = (double*)malloc(colsB * rowsA * sizeof(double));
-        double* result4 = (double*)malloc(colsB * rowsA * sizeof(double));
+        double* result1 = new double[rowsB * sizeof(double)];
+        double* result2 = new double[rowsB * sizeof(double)];
+        double* result3 = new double[colsB * rowsA * sizeof(double)];
+        double* result4 = new double[colsB * rowsA * sizeof(double)];
 
         auto start1 = std::chrono::high_resolution_clock::now();
         multiply_mv_row_major(matrixBRowMajor, rowsB, colsB, vector, result1);
         auto end1 = std::chrono::high_resolution_clock::now();
         times1[t] = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1).count();
-        free(result1);
+        delete result1;
 
         auto start2 = std::chrono::high_resolution_clock::now();
         multiply_mv_col_major(matrixBColMajor, rowsB, colsB, vector, result2);
         auto end2 = std::chrono::high_resolution_clock::now();
         times2[t] = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - start2).count();
-        free(result2);
+        delete result2;
 
         auto start3 = std::chrono::high_resolution_clock::now();
         multiply_mm_naive(matrixA, rowsA, colsA, matrixBRowMajor, rowsB, colsB, result3);
         auto end3 = std::chrono::high_resolution_clock::now();
         times3[t] = std::chrono::duration_cast<std::chrono::nanoseconds>(end3 - start3).count();
-        free(result3);
+        delete result3;
 
         auto start4 = std::chrono::high_resolution_clock::now();
         multiply_mm_transposed_b(matrixA, rowsA, colsA, matrixBColMajor, rowsB, colsB, result4);
         auto end4 = std::chrono::high_resolution_clock::now();
         times4[t] = std::chrono::duration_cast<std::chrono::nanoseconds>(end4 - start4).count();
-        free(result4);
+        delete result4;
     }
 
 

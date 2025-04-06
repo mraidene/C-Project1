@@ -1,1 +1,0 @@
-double dot_product(const double* A, const double* B, const int length);
