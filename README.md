@@ -6,6 +6,8 @@
 
 ## Part 2
 
+The details of Part 2 are included in report.pdf.
+
 ### Benchmarking
 
 ### Cache Locality Analysis
